@@ -3,6 +3,7 @@ import Express from 'express';
 import config from 'app/config';
 import placesHandler from 'server/handlers/places';
 import placeHandler from 'server/handlers/place';
+import postHandler from 'server/handlers/post';
 import mainMiddleware from 'server/middleware/main';
 
 
@@ -13,6 +14,7 @@ app.use('/dist', Express.static('dist'));
 
 app.use('/api/places', placesHandler);
 app.use('/api/places/:id', placeHandler);
+app.use('/api/places/:id/post',postHandler);
 
 // Serve using the React App
 app.use(mainMiddleware);
