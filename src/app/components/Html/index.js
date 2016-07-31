@@ -11,7 +11,7 @@ const Html = ({ assets, component, store }) => {
     <html>
       <head>
         <meta httpEquiv="Content-Type" value="text/html; charset='utf-8'" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1" />
         {head.base.toComponent()}
         {head.title.toComponent()}
         {head.meta.toComponent()}
@@ -21,6 +21,8 @@ const Html = ({ assets, component, store }) => {
         {assets.bundle.css && assets.bundle.css.map((path, index) => (
           <link key={`css-${index}`} rel="stylesheet" type="text/css" href={path} />
         ))}
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,500" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
       </head>
       <body>
         <div id="root" dangerouslySetInnerHTML={{ __html: content }} />

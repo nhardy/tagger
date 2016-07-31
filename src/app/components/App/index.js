@@ -1,26 +1,27 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import cx from 'classnames';
+import { deepOrange500 } from 'material-ui/styles/colors';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import FontAwesome from 'app/components/FontAwesome';
 import * as appPropTypes from 'app/components/propTypes';
-
 
 import 'app/assets/stylus/reset.styl';
 import 'app/assets/stylus/fonts.styl';
-import 'font-awesome/css/font-awesome.min.css';
-import 'gemini-scrollbar/gemini-scrollbar.css';
-import styles from './styles.styl';
+// import 'font-awesome/css/font-awesome.min.css';
+// import 'gemini-scrollbar/gemini-scrollbar.css';
+import './styles.styl';
 
 
-@connect((state) => ({
-  loading: state.reduxAsyncConnect.loading,
-}))
+const muiTheme = getMuiTheme({
+  palette: {
+    accent1Color: deepOrange500,
+  },
+}, { userAgent: 'all' });
+
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.node,
     location: appPropTypes.location,
-    loading: PropTypes.bool,
   };
 
   static childContextTypes = {
@@ -34,15 +35,11 @@ export default class App extends Component {
   }
 
   render() {
-    const { loading } = this.props;
     return (
-      <div className={styles.root}>
-        {this.props.children}
-        {loading && <div className={styles.spinnerWrapper}>
-          <div className={styles.spinner}>
-            <FontAwesome className={cx('fa-refresh', 'fa-spin')} />
-          </div>
-        </div>}
+      <div>
+        <MuiThemeProvider muiTheme={muiTheme}>
+          {this.props.children}
+        </MuiThemeProvider>
       </div>
     );
   }

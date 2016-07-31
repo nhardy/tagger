@@ -15,8 +15,8 @@ app.use('/dist', Express.static('dist'));
 
 app.use('/api/places', placesHandler);
 app.use('/api/places/:id', placeHandler);
-app.use('/api/places/:id/post',newPostHandler);
-app.use('/api/places/:id/post/:id',postHandler);
+app.use('/api/places/:id/post', newPostHandler);
+app.use('/api/places/:id/post/:id', postHandler);
 
 // Serve using the React App
 app.use(mainMiddleware);
