@@ -8,6 +8,7 @@
     "dev": "gulp dev",
     "prod": "gulp prod",
     "start": "gulp",
+    "ingest": "gulp ingest",
     "test": "mocha"
   },
   "repository": {

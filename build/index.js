@@ -4,6 +4,7 @@ import runSequence from 'run-sequence';
 import './clean';
 import './serve';
 import './webpack';
+import './ingest';
 
 
 gulp.task('dev', () => {
