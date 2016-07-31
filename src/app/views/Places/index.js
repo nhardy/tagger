@@ -43,7 +43,15 @@ export default class PlacesView extends Component { // eslint-disable-line react
       },
     ],
   };
-
+  onComponentDidMount(){
+    navigator.geolocation.getCurrentPosition((position)=>
+      this.setState({
+        latitude: position.coords.latitude, 
+        longitude: position.coords.longitude,
+      }));
+  }
+  
+  }
   render() {
     const { places } = this.props;
 
