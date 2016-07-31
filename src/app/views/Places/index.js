@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import { List, ListItem } from 'material-ui/List';
@@ -9,49 +10,38 @@ import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 import LocationPOIControl from 'app/components/LocationPOIControl';
+import { getPlaces } from 'app/actions/placesActions';
 
 import styles from './styles.styl';
 
 
+@connect((state) => ({
+  places: state.places.items,
+}), { getPlaces })
 export default class PlacesView extends Component { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     places: PropTypes.array,
+    getPlaces: PropTypes.func,
   };
 
-  static defaultProps = {
-    places: [
-      {
-        id: 0,
-        name: 'The Opera House',
-        stats: {
-          posts: 5,
-        },
-      },
-      {
-        id: 1,
-        name: 'Circular Quay',
-        stats: {
-          posts: 2,
-        },
-      },
-      {
-        id: 2,
-        name: '464 Bus',
-        stats: {
-          posts: 13,
-        },
-      },
-    ],
-  };
-  onComponentDidMount(){
-    navigator.geolocation.getCurrentPosition((position)=>
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
       this.setState({
-        latitude: position.coords.latitude, 
-        longitude: position.coords.longitude,
-      }));
+        latitude,
+        longitude,
+      });
+
+      console.log('this.props', this.props);
+      console.log('actions', getPlaces);
+
+      this.props.getPlaces({
+        latitude,
+        longitude,
+      });
+    });
   }
-  
-  }
+
   render() {
     const { places } = this.props;
 

@@ -18,11 +18,6 @@ export default function reql(query) {
     if (connected) return resolve(c);
     listeners.push([resolve, reject]);
   }).then((connection) => {
-    return new Promise((resolve, reject) => {
-      query.run(connection, (err, result) => { // eslint-disable-line consistent-return
-        if (err) return reject(err);
-        resolve(result);
-      });
-    });
+    return query.run(connection);
   });
 }
