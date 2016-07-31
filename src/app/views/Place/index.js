@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import cx from 'classnames';
 import { Link } from 'react-router';
 import IconButton from 'material-ui/IconButton';
@@ -8,24 +9,17 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
-import img1 from 'app/assets/images/img1.jpg';
-import img2 from 'app/assets/images/img2.jpg';
+import { getPlace, setPlace } from 'app/actions/places';
+
 import styles from './styles.styl';
 
 
+@connect((state) => ({
+  posts: state.places.items.filter((place) => place.id === state.places.id)[0].posts,
+}), { getPlace, setPlace })
 export default class PlaceView extends Component {
   static propTypes = {
-    items: PropTypes.array,
-  };
-
-  static defaultProps = {
-    items: [
-      { text: 'Some stupid tweet thingo that goes here' },
-      { text: 'Some other stupid thing that does things' },
-      { imgUrl: img1, text: 'Here\'s a silly caption for a silly photo, bitch!' },
-      { imgUrl: img2 },
-      { text: 'Some other stupid thing that does things' },
-    ],
+    posts: PropTypes.array,
   };
 
   state = {
@@ -68,7 +62,7 @@ export default class PlaceView extends Component {
   }
 
   render() {
-    const { items } = this.props;
+    const { posts } = this.props;
     const { postTextOpen, postImageOpen } = this.state;
 
     const iconElementLeft = (
@@ -136,7 +130,7 @@ export default class PlaceView extends Component {
         </Dialog>
 
         <div className={styles.feed}>
-          {items.map(({ text, imgUrl }, i) => (
+          {posts.map(({ text, imgUrl }, i) => (
             <div key={i} className={styles.item}>
               <span className={cx({ [styles.caption]: !!imgUrl, [styles.text]: !imgUrl })}>{text}</span>
               {imgUrl && <img className={styles.img} src={imgUrl} />}
