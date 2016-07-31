@@ -10,5 +10,5 @@ export default function placesHandler(req, res) {
     res.send({
       items: places,
     });
-  }).catch((err) => console.log(err));
+  }).catch((error) => res.error({ error }));
 }
