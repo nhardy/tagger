@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-async-connect';
 import cx from 'classnames';
 import { Link } from 'react-router';
 import IconButton from 'material-ui/IconButton';
@@ -9,11 +10,17 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
-import { getPlace, setPlace } from 'app/actions/places';
+import { getPlace, setPlace } from 'app/actions/placesActions';
 
 import styles from './styles.styl';
 
-
+@asyncConnect([{
+  promise: (params, { dispatch, getState }) => {
+    console.log(params);
+    const state = getState().places;
+    return Promise.resolve(state);
+  },
+}])
 @connect((state) => ({
   posts: state.places.items.filter((place) => place.id === state.places.id)[0].posts,
 }), { getPlace, setPlace })

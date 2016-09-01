@@ -5,11 +5,13 @@ import {
   GET_PLACE_REQUEST,
   GET_PLACE_SUCCESS,
   GET_PLACE_FAILURE,
+  SET_PLACE,
 } from 'app/actions/placesActions';
 
 
 const initialState = {
   items: [],
+  id: null,
 };
 
 export default function placesReducer(state = initialState, action) {
@@ -35,7 +37,7 @@ export default function placesReducer(state = initialState, action) {
         ...state,
       };
 
-    case GET_PLACE_SUCCESS:
+    case GET_PLACE_SUCCESS: // eslint-disable-line no-case-declarations
       const newState = {
         ...state,
       };
@@ -53,6 +55,12 @@ export default function placesReducer(state = initialState, action) {
     case GET_PLACE_FAILURE:
       return {
         ...state,
+      };
+
+    case SET_PLACE:
+      return {
+        ...state,
+        id: action.id,
       };
 
     default:
